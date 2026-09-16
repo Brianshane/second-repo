@@ -9,3 +9,24 @@ function createMessage(color, time) {
 
 const message = createMessage(selectedColor, timestamp);
 console.log(message);
+
+const recentSelections = [];
+recentSelections.push({ color: selectedColor, time: timestamp });
+
+function countSelections(selections) {
+	return selections.reduce((counts, selection) => {
+		counts[selection.color] = (counts[selection.color] || 0) + 1;
+		return counts;
+	}, {});
+}
+
+function formatSummary(counts) {
+	return Object.entries(counts)
+		.map(([color, count]) => `${color}: ${count}`)
+		.join(', ');
+}
+
+const selectionCounts = countSelections(recentSelections);
+const summary = formatSummary(selectionCounts);
+
+console.log(`Summary: ${summary}`);
